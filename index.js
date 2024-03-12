@@ -4,7 +4,21 @@ const app = express();
 
 
 app.get('/',(req,res,next)=>{
-    res.send('oke');
+    var json = [
+        {
+            name : "Nguyen Thanh Nhan",
+            yob: "2002",        
+        },
+        {
+            name : "Nguyen The Huy",
+            yob: "xxxx",        
+        },
+        {
+            name : "Nguyen Thi Ngoc Mai",
+            yob: "xxxx",        
+        }
+    ]
+    res.json(json);
 })
 
 
