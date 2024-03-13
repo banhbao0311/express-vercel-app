@@ -6,39 +6,39 @@ const uri = "mongodb+srv://nhannguyenthanh0311:iOc5AwGQeMAdecDo@cluster0.vmw5wth
 
 const client = new MongoClient(uri, {
     serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
     }
-  });
+});
 
-  async function run() {
+async function run() {
     try {
-      // Connect the client to the server	(optional starting in v4.7)
-      await client.connect();
-      // Send a ping to confirm a successful connection
-      await client.db("admin").command({ ping: 1 });
-      console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
-      // Ensures that the client will close when you finish/error
-      await client.close();
+        // Ensures that the client will close when you finish/error
+        await client.close();
     }
-  }
+}
 
 
-app.get('/',(req,res,next)=>{
+app.get('/', (req, res, next) => {
     var json = [
         {
-            name : "Nguyen Thanh Nhan",
-            yob: "2002",        
+            name: "Nguyen Thanh Nhan",
+            yob: "2002",
         },
         {
-            name : "Nguyen The Huy",
-            yob: "xxxx",        
+            name: "Nguyen The Huy",
+            yob: "xxxx",
         },
         {
-            name : "Nguyen Thi Ngoc Mai",
-            yob: "xxxx",        
+            name: "Nguyen Thi Ngoc Mai",
+            yob: "xxxx",
         }
     ]
     run().catch(console.dir);
@@ -46,24 +46,25 @@ app.get('/',(req,res,next)=>{
     res.json(json);
 })
 
-app.get('/user', async (req,res,next) =>{
+app.get('/user', async (req, res, next) => {
     try {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
         // Send a ping to confirm a successful connection
-        const database = await client.db("admin").command({ ping: 1 });
+        await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
-        const collection = database.collection('users')
         
+        const database = client.db('sample_mflix');
+        const collection = database.collection('users');
         const queryResult = await collection.find({}).toArray();
+        console.log(queryResult);
         res.json(queryResult);
-        
-      } finally {
+    } finally {
         // Ensures that the client will close when you finish/error
         await client.close();
-      }
+    }
 })
 
-app.listen(3000,() =>{
+app.listen(3000, () => {
     console.log('app is running');
 })
