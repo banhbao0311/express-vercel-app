@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Router } from 'express'
 import { MongoClient, ServerApiVersion } from 'mongodb';
 const app = express();
 const uri = "mongodb+srv://nhannguyenthanh0311:iOc5AwGQeMAdecDo@cluster0.vmw5wth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -63,6 +63,11 @@ app.get('/user', async (req, res, next) => {
         // Ensures that the client will close when you finish/error
         await client.close();
     }
+})
+
+app.get('/comments',(req,res,next)=>{
+    
+    res.send('oke');
 })
 
 app.listen(3000, () => {
