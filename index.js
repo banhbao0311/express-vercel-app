@@ -65,9 +65,24 @@ app.get('/user', async (req, res, next) => {
     }
 })
 
-app.get('/comments',(req,res,next)=>{
+app.get('/comments', async (req,res,next)=>{
     
-    res.send('oke');
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        
+        const database = client.db('sample_mflix');
+        const collection = database.collection('comments');
+        const queryResult = await collection.find({name: 'Mercedes Tyler'}).toArray();
+        console.log(queryResult);
+        res.status(200).send(queryResult);
+    } finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
 })
 
 app.listen(3000, () => {
