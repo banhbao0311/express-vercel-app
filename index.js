@@ -1,6 +1,29 @@
 import express from 'express'
-
+const {MongoClient,ServerApiVersion} = require('mongodb')
 const app = express();
+const uri = "mongodb+srv://nhannguyenthanh0311:iOc5AwGQeMAdecDo@cluster0.vmw5wth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+
+const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
+
+  async function run() {
+    try {
+      // Connect the client to the server	(optional starting in v4.7)
+      await client.connect();
+      // Send a ping to confirm a successful connection
+      await client.db("admin").command({ ping: 1 });
+      console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    } finally {
+      // Ensures that the client will close when you finish/error
+      await client.close();
+    }
+  }
 
 
 app.get('/',(req,res,next)=>{
@@ -18,6 +41,8 @@ app.get('/',(req,res,next)=>{
             yob: "xxxx",        
         }
     ]
+    run().catch(console.dir);
+
     res.json(json);
 })
 
