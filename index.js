@@ -1,5 +1,5 @@
 import express from 'express'
-const {MongoClient,ServerApiVersion} = require('mongodb')
+import { MongoClient, ServerApiVersion } from 'mongodb';
 const app = express();
 const uri = "mongodb+srv://nhannguyenthanh0311:iOc5AwGQeMAdecDo@cluster0.vmw5wth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
