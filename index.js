@@ -58,7 +58,7 @@ app.get('/user', async (req, res, next) => {
         const collection = database.collection('users');
         const queryResult = await collection.find({}).toArray();
         console.log(queryResult);
-        res.json(queryResult);
+        res.status(200).send(queryResult);
     } finally {
         // Ensures that the client will close when you finish/error
         await client.close();
