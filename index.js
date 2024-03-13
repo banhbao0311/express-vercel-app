@@ -46,6 +46,23 @@ app.get('/',(req,res,next)=>{
     res.json(json);
 })
 
+app.get('/user', async (req,res,next) =>{
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        const database = await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const collection = database.collection('users')
+        
+        const queryResult = await collection.find({}).toArray();
+        res.json(queryResult);
+        
+      } finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+      }
+})
 
 app.listen(3000,() =>{
     console.log('app is running');
